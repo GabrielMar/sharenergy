@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    command: [--auth]
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: sharenergy
+    volumes:
+      - mongodata:/data/db
+
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/api/Dockerfile
+  #   container_name: backend
+  #   depends_on:
+  #     - mongodb
+  #   environment:
+  #     - MONGODB_CONNSTRING=mongodb://root:password@localhost:27017/sharenergy
+  #   ports:
+  #     - 3333:3333
+
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/frontend/Dockerfile
+  #   container_name: frontend
+  #   ports:
+  #     - 3000:3000
+
+volumes:
+  mongodata:
+    driver: local
