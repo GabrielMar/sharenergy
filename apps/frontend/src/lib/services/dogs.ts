@@ -2,8 +2,6 @@ import axios from 'axios';
 
 export const url = 'https://random.dog/';
 
-const instance = axios.create({
+export const dogs = axios.create({
   baseURL: `${url}woof`,
 });
-
-export default instance;

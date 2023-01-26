@@ -1,50 +1,59 @@
 import {
   IsEmail,
-  IsPhoneNumber,
   IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
   Length,
   Matches,
 } from 'class-validator';
 
 export class CreateClientDto {
-  @IsNotEmpty()
+  @IsString()
   @Length(3)
-  name: string;
+  readonly name: string;
 
-  @IsNotEmpty()
+  @IsString()
   @IsEmail()
-  email: string;
+  readonly email: string;
 
-  @IsNotEmpty()
+  @IsString()
   @IsPhoneNumber('BR')
-  phone: string;
+  readonly phone: string;
 
-  @IsNotEmpty()
+  @IsString()
   @Matches(/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}/)
-  cpf: string;
+  readonly cpf: string;
 
+  @IsString()
   @IsNotEmpty()
-  country: string;
+  readonly country: string;
 
+  @IsString()
   @IsNotEmpty()
-  state: string;
+  readonly state: string;
 
+  @IsString()
   @IsNotEmpty()
-  city: string;
+  readonly city: string;
 
+  @IsString()
   @IsNotEmpty()
-  district: string;
+  readonly district: string;
 
+  @IsString()
   @IsNotEmpty()
-  address: string;
+  readonly address: string;
 
+  @IsString()
   @IsNotEmpty()
-  complement: string;
+  readonly complement: string;
 
+  @IsString()
   @IsNotEmpty()
-  number: string;
+  readonly number: string;
 
+  @IsString()
   @IsNotEmpty()
   @Matches(/^[0-9]{5}-[0-9]{3}$/)
-  cep: string;
+  readonly cep: string;
 }

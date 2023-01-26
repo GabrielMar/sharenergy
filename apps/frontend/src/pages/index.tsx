@@ -1,40 +1,18 @@
-/* eslint-disable @next/next/no-img-element */
+import { ChangeEvent, ReactNode, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Pagination from '@mui/material/Pagination';
-
-import randomUsers from '../constants/randomUsers';
-// import { usePageStore } from '../lib/contexts/page';
-import RandomUsersType from '../interfaces/randomUsers';
-
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Layout from '../components/Layout';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import usePagination from '@mui/material/usePagination';
-import { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+
+import { randomUsers } from '../lib/services/randomUsers';
+import RandomUsersType from '../interfaces/randomUsers';
+
 import clsx from 'clsx';
 import Link from 'next/link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useRouter } from 'next/router';
-import useAutocomplete from '@mui/material/useAutocomplete';
 import Image from 'next/image';
-import { AnyARecord } from 'dns';
 
 type ParamsType = {
   page: number;
@@ -118,7 +96,7 @@ export default function Home() {
             ])
             .flat()}
           onChange={(e) => handleChangeComplete(e.currentTarget.textContent)}
-          value={[term]}
+          value={term}
           renderInput={(params) => (
             <TextField {...params} label="Pesquisar" placeholder={term} />
           )}

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-import cats from '../constants/cats';
+import { cats } from '../lib/services/cats';
 
 const statusCode = [
   100, 101, 102, 103, 200, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303,

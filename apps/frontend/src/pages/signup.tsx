@@ -1,33 +1,37 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import Link from 'next/link';
 import clsx from 'clsx';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { api } from '../lib/services/api';
+import { SignInInputs, signInSchema } from './signin';
 
-export type SignInInputs = {
-  username: string;
-  password: string;
-  remember: boolean;
+type SignUpInputs = SignInInputs & {
+  confirm: string;
 };
 
-export const signInSchema = z.object({
-  username: z.string().min(3).max(32),
-  password: z.string().regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/),
-  confirm: z.string(),
-  remember: z.boolean(),
-});
+const signUpSchema = signInSchema
+  .extend({
+    confirm: z.string(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirm)
+      ctx.addIssue({
+        code: 'custom',
+        message: "Passwords don't match",
+        path: ['confirm'], // path of error
+      });
+  });
 
-export default function SignIn() {
+export default function SignUp() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInInputs>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<SignUpInputs>({
+    resolver: zodResolver(signUpSchema),
   });
-  const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
+  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
     try {
       const res = await api.post('auth/login', data);
       if (res.data) {
@@ -84,6 +88,25 @@ export default function SignIn() {
                 {...register('password')}
               />
             </div>
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Senha
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Confirmar senha"
+                autoComplete="current-password"
+                className={clsx(
+                  'w-full rounded-md border border-gray-300 bg-transparent py-3 px-5 text-base text-gray-900 placeholder-gray-500 outline-none ring-1 ring-inset ring-transparent',
+                  errors.password
+                    ? 'border-red-500 focus:placeholder-red-500 focus:ring-red-500'
+                    : 'focus:border-green-500 focus:outline-none focus:ring-green-500'
+                )}
+                {...register('confirm')}
+              />
+            </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -100,15 +123,6 @@ export default function SignIn() {
                   Lembre de mim
                 </label>
               </div>
-
-              <div className="text-sm">
-                <Link
-                  href=""
-                  className="font-medium text-blue-500 hover:text-blue-700"
-                >
-                  Esqueceu a senha?
-                </Link>
-              </div>
             </div>
             <input
               type="submit"
@@ -116,12 +130,6 @@ export default function SignIn() {
               className="w-full cursor-pointer rounded-md border bg-green-600 py-3 px-5 text-base text-white transition hover:bg-opacity-90"
             />
           </form>
-          <p className="text-base text-gray-700">
-            Ainda não é membro?{' '}
-            <Link href="/signup" className="text-blue-700 hover:underline">
-              Criar conta
-            </Link>
-          </p>
         </div>
       </div>
     </main>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 
-import dogs, { url } from '../constants/dogs';
+import { dogs, url } from '../lib/services/dogs';
 import Loading from '../components/Loading';
 
 const videoFormats = ['mp4', 'webm', 'ogg'] as const;

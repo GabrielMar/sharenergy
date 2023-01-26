@@ -5,7 +5,7 @@ export const searchParams = {
   results: 10,
 };
 
-const instance = axios.create({
+export const randomUsers = axios.create({
   baseURL: 'https://randomuser.me/api',
   params: {
     seed: 'sharenergy',
@@ -13,5 +13,3 @@ const instance = axios.create({
     results: '10',
   },
 });
-
-export default instance;

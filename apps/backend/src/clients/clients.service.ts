@@ -3,12 +3,13 @@ import { PrismaService } from '@sharenergy/nest-helpers';
 
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { Client } from './entities/client.entity';
 
 @Injectable()
 export class ClientsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateClientDto) {
+  async create(dto: CreateClientDto): Promise<Client> {
     const client = await this.prisma.client.create({
       data: {
         name: dto.name,
@@ -24,21 +25,18 @@ export class ClientsService {
         number: dto.number,
         cep: dto.cep,
       },
-      select: {
-        id: true,
-      },
     });
 
-    return { ok: !!client.id };
+    return client;
   }
 
-  async findAll() {
+  async findAll(): Promise<Client[]> {
     const client = await this.prisma.client.findMany();
 
     return client;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Client> {
     const client = await this.prisma.client.findFirst({
       where: {
         id: id,
@@ -48,7 +46,7 @@ export class ClientsService {
     return client;
   }
 
-  async update(id: string, dto: UpdateClientDto) {
+  async update(id: string, dto: UpdateClientDto): Promise<Client> {
     const client = await this.prisma.client.update({
       where: {
         id: id,
@@ -67,24 +65,18 @@ export class ClientsService {
         number: dto.number,
         cep: dto.cep,
       },
-      select: {
-        id: true,
-      },
     });
 
-    return { ok: !!client.id };
+    return client;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<Client> {
     const client = await this.prisma.client.delete({
       where: {
         id: id,
       },
-      select: {
-        id: true,
-      },
     });
 
-    return { ok: !!client.id };
+    return client;
   }
 }
