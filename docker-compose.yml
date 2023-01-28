@@ -4,15 +4,15 @@ services:
     image: mongo:latest
     restart: always
     container_name: mongodb
-    command: [--auth]
+    # command: [--auth]
     ports:
       - '27017:27017'
-    # environment:
-    # MONGO_INITDB_ROOT_USERNAME: root
-    # MONGO_INITDB_ROOT_PASSWORD: password
-    # MONGO_INITDB_DATABASE: sharenergy
-    volumes:
-      - mongodata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: sharenergy
+    # volumes:
+    #   - mongodata:/data/db
 
   # backend:
   #   build:
@@ -33,7 +33,6 @@ services:
   #   container_name: frontend
   #   ports:
   #     - 3000:3000
-
-volumes:
-  mongodata:
-    driver: local
+# volumes:
+#   mongodata:
+#     driver: local

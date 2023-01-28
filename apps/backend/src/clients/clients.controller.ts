@@ -22,8 +22,8 @@ export class ClientsController {
   @Post()
   @ApiOperation({ summary: 'Crie o registro do cliente' })
   @ApiBody({ type: Client })
-  create(@Body() createClientDto: CreateClientDto): Promise<Client> {
-    return this.clientsService.create(createClientDto);
+  create(@Body() dto: CreateClientDto): Promise<Client> {
+    return this.clientsService.create(dto);
   }
 
   @Get()
@@ -50,9 +50,9 @@ export class ClientsController {
   @ApiOperation({ summary: 'Atualize o registro de um cliente específico' })
   update(
     @Param('id') id: string,
-    @Body() updateClientDto: UpdateClientDto
+    @Body() dto: UpdateClientDto
   ): Promise<Client> {
-    return this.clientsService.update(id, updateClientDto);
+    return this.clientsService.update(id, dto);
   }
 
   @Delete(':id')

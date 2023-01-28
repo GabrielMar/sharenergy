@@ -5,7 +5,7 @@ export class User {
   username: string;
 
   @ApiProperty({
-    example: 'Abc123456+',
+    example: 'Abc123456++',
     description: 'Senha',
   })
   password: string;
